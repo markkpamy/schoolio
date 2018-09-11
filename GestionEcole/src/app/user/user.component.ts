@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { User } from '../models/user.model';
-import { UserService } from './user.service';
+import {User} from '../models/user.model';
+import {UserService} from './user.service';
+import {TableModule} from 'primeng/table';
 
 @Component({
   selector: 'app-user',
@@ -12,6 +13,7 @@ import { UserService } from './user.service';
 export class UserComponent implements OnInit {
 
   users: User[];
+  cols: any;
 
   constructor(private router: Router, private userService: UserService) {
 
@@ -19,14 +21,19 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getUsers()
-      .subscribe( data => {
+      .subscribe(data => {
         this.users = data;
       });
+    this.cols = [
+      {field: 'id', header: 'ID'},
+      {field: 'email', header: 'Email'},
+      {field: 'firstName', header: 'Prénom'},
+      {field: 'lastName', header: 'Nom'}];
   }
 
   deleteUser(user: User): void {
     this.userService.deleteUser(user)
-      .subscribe( data => {
+      .subscribe(data => {
         this.users = this.users.filter(u => u !== user);
       });
   }

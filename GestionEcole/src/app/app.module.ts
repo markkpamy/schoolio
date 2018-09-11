@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app.routing.module';
 import {UserService} from './user/user.service';
 import {HttpClientModule} from '@angular/common/http';
 import {AddUserComponent} from './user/add-user.component';
+import {TableModule} from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {AddUserComponent} from './user/add-user.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    TableModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

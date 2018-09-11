@@ -1,24 +1,41 @@
-<div class="col-md-6">
-<h2> User Details</h2>
+<!--<div class="col-md-6">-->
+<!--<h2> User Details</h2>-->
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th class="hidden">Id</th>
-    <th>FirstName</th>
-    <th>LastName</th>
-    <th>Email</th>
-    <th>Action</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let user of users">
-    <td class="hidden">{{user.id}}</td>
-    <td>{{user.firstName}}</td>
-    <td>{{user.lastName}}</td>
-    <td>{{user.email}}</td>
-    <td><button class="btn btn-danger" (click)="deleteUser(user)"> Delete User</button></td>
-  </tr>
-  </tbody>
-</table>
-</div>
+<!--<table class="table table-striped">-->
+  <!--<thead>-->
+  <!--<tr>-->
+    <!--<th class="hidden">Id</th>-->
+    <!--<th>FirstName</th>-->
+    <!--<th>LastName</th>-->
+    <!--<th>Email</th>-->
+    <!--<th>Action</th>-->
+  <!--</tr>-->
+  <!--</thead>-->
+  <!--<tbody>-->
+  <!--<tr *ngFor="let user of users">-->
+    <!--<td class="hidden">{{user.id}}</td>-->
+    <!--<td>{{user.firstName}}</td>-->
+    <!--<td>{{user.lastName}}</td>-->
+    <!--<td>{{user.email}}</td>-->
+    <!--<td><button class="btn btn-danger" (click)="deleteUser(user)"> Delete User</button></td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+
+<p-table [columns]="cols" [value]="users" [paginator]="true" [rows]="10">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns">
+        {{rowData[col.field]}}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
