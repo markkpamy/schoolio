@@ -28,4 +28,8 @@ export class UserService {
     return this.http.post<User>(this.userUrl, user);
   }
 
+  public updateUser(user) {
+    return this.http.put<User>(this.userUrl, user);
+  }
+
 }
