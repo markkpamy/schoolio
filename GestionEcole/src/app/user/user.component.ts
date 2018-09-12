@@ -66,7 +66,7 @@ export class UserComponent implements OnInit {
         this.getUsers();
       }, () => {
         this.messageService.add({severity: 'error', summary: '', detail: 'Erreur lors de l\'ajout'});
-  })
+      })
     ;
   }
 
@@ -74,6 +74,8 @@ export class UserComponent implements OnInit {
     this.userService.updateUser(user).subscribe(() => {
       this.messageService.add({severity: 'success', summary: '', detail: 'Utilisateur mis à jour'});
       this.getUsers();
+    }, () => {
+      this.messageService.add({severity: 'error', summary: '', detail: 'Utilisateur non mis à jour'});
     });
   }
 
@@ -103,6 +105,7 @@ export class UserComponent implements OnInit {
       this.createUser(this.user);
       this.user = null;
     } else {
+      console.log('hello');
       this.assignFormValues(this.selectedUser);
       this.updateUser(this.selectedUser);
       this.selectedUser = null;

@@ -1,4 +1,4 @@
-<p-toast [style]="{marginTop: '80px'}" key="deleteUserSuccess"></p-toast>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
 <p-table [columns]="cols" [value]="users" selectionMode="single" [(selection)]="selectedUser" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
   <ng-template pTemplate="caption">
     Liste des utilisateurs
