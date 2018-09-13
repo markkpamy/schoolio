@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {User} from '../models/user.model';
 import {UserService} from './user.service';
 import {TableModule} from 'primeng/table';
 import {DialogModule} from 'primeng/dialog';
 import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {User} from './models/user.model';
 
 @Component({
   selector: 'app-user',
@@ -133,7 +133,6 @@ export class UserComponent implements OnInit {
   }
 
   private assignFormValues(user: User): void {
-    user.id = this.userForm.get('id').value;
     user.firstName = this.userForm.get('firstname').value;
     user.lastName = this.userForm.get('lastname').value;
     user.email = this.userForm.get('email').value;
