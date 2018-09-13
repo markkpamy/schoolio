@@ -2,6 +2,7 @@
 <p-table #usertable [columns]="cols" [value]="users" selectionMode="single" [(selection)]="selectedUser" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
   <ng-template pTemplate="caption">
     Liste des utilisateurs
+    <i class="pi pi-filter" [ngStyle]="{float: 'right'}" type="button" (click)="onSearch()"></i>
   </ng-template>
   <ng-template pTemplate="header" let-columns>
     <tr>
@@ -10,7 +11,7 @@
         <p-sortIcon [field]="col.field"></p-sortIcon>
       </th>
     </tr>
-    <tr>
+    <tr *ngIf="hideFilter">
       <th *ngFor="let col of columns" [ngSwitch]="col.field">
         <input *ngSwitchCase="'id'" pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">
         <input *ngSwitchCase="'firstName'" pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">

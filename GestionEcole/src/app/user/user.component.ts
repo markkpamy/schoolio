@@ -22,6 +22,7 @@ export class UserComponent implements OnInit {
   cols: any;
   newUser: boolean;
   user: User;
+  hideFilter: boolean = false;
   public userFormId = 'userForm';
 
   constructor(
@@ -138,6 +139,9 @@ export class UserComponent implements OnInit {
     user.email = this.userForm.get('email').value;
   }
 
+  onSearch() {
+    this.hideFilter = !this.hideFilter;
+  }
 }
 
 
