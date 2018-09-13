@@ -1,5 +1,5 @@
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
-<p-table [columns]="cols" [value]="users" selectionMode="single" [(selection)]="selectedUser" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+<p-table #usertable [columns]="cols" [value]="users" selectionMode="single" [(selection)]="selectedUser" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
   <ng-template pTemplate="caption">
     Liste des utilisateurs
   </ng-template>
@@ -8,6 +8,15 @@
       <th *ngFor="let col of columns" [pSortableColumn]="col.field">
         {{col.header}}
         <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+    <tr>
+      <th *ngFor="let col of columns" [ngSwitch]="col.field">
+        <input *ngSwitchCase="'id'" pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">
+        <input *ngSwitchCase="'firstName'" pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">
+        <input *ngSwitchCase="'lastName'" pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">
+        <input *ngSwitchCase="'email'" pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">
+
       </th>
     </tr>
   </ng-template>
