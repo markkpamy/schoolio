@@ -7,7 +7,7 @@ build:
   stage: build
   script: 
   - cd apiGestionEcole/
-  - ./mvnw clean package
+  - mvn clean package
   artifacts:
     paths:
       - target/apiGestionEcole-0.0.1-SNAPSHOT.jar
