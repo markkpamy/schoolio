@@ -5,7 +5,9 @@ stages:
 
 build:
   stage: build
-  script: ./apiGestionEcole/mvnw package
+  script: 
+  - cd apiGestionEcole/
+  - mvnw package
   artifacts:
     paths:
       - target/apiGestionEcole-0.0.1-SNAPSHOT.jar
