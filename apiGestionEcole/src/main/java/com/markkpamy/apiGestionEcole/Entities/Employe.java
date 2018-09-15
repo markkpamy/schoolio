@@ -7,25 +7,48 @@ import java.util.Date;
 @Table(name = "employe")
 public class Employe {
 
-
-    public Employe() {
-    }
-
     @Id
-    @Column(name = "idEmploye", nullable = false)
-    private int idEmploye;
-
-    public int getIdEmploye() {
-        return idEmploye;
-    }
-
-    public void setIdEmploye(int idEmploye) {
-        this.idEmploye = idEmploye;
-    }
+    @Column(name = "id_employe", nullable = false)
+    private int id_employe;
 
     @Basic
-    @Column(name = "Nom", nullable = true, length = 45)
+    @Column(name = "nom", nullable = true, length = 45)
     private String nom;
+
+    @Basic
+    @Column(name = "prenom", nullable = true, length = 45)
+    private String prenom;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_naissance", nullable = true, length = 45)
+    private Date date_naissance;
+
+    @Basic
+    @Column(name = "adresse", nullable = true, length = 45)
+    private String adresse;
+
+    @Basic
+    @Column(name = "statut", nullable = true, length = 45)
+    private String statut;
+
+    @Basic
+    @Column(name = "telephone", nullable = true, length = 45)
+    private String telephone;
+    @Basic
+    @Column(name = "email", nullable = true, length = 45)
+    private String email;
+
+    @Basic
+    @Column(name = "date_recrutement", nullable = true)
+    private Date date_recrutement;
+
+    public int getId_employe() {
+        return id_employe;
+    }
+
+    public void setId_employe(int id_employe) {
+        this.id_employe = id_employe;
+    }
 
     public String getNom() {
         return nom;
@@ -35,10 +58,6 @@ public class Employe {
         this.nom = nom;
     }
 
-    @Basic
-    @Column(name = "Prenom", nullable = true, length = 45)
-    private String prenom;
-
     public String getPrenom() {
         return prenom;
     }
@@ -47,21 +66,13 @@ public class Employe {
         this.prenom = prenom;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "DateNaissance", nullable = true, length = 45)
-    private Date dateNaissance;
-
-    public Date getDateNaissance() {
-        return dateNaissance;
+    public Date getDate_naissance() {
+        return date_naissance;
     }
 
-    public void setDateNaissance(Date dateNaissance) {
-        this.dateNaissance = dateNaissance;
+    public void setDate_naissance(Date date_naissance) {
+        this.date_naissance = date_naissance;
     }
-
-    @Basic
-    @Column(name = "Adresse", nullable = true, length = 45)
-    private String adresse;
 
     public String getAdresse() {
         return adresse;
@@ -71,10 +82,6 @@ public class Employe {
         this.adresse = adresse;
     }
 
-    @Basic
-    @Column(name = "Telephone", nullable = true, length = 45)
-    private String telephone;
-
     public String getTelephone() {
         return telephone;
     }
@@ -82,10 +89,6 @@ public class Employe {
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
-
-    @Basic
-    @Column(name = "Email", nullable = true, length = 45)
-    private String email;
 
     public String getEmail() {
         return email;
@@ -95,10 +98,6 @@ public class Employe {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "Statut", nullable = true, length = 45)
-    private String statut;
-
     public String getStatut() {
         return statut;
     }
@@ -107,16 +106,12 @@ public class Employe {
         this.statut = statut;
     }
 
-    @Basic
-    @Column(name = "DateRecrutement", nullable = true)
-    private Date dateRecrutement;
-
-    public Date getDateRecrutement() {
-        return dateRecrutement;
+    public Date getDate_recrutement() {
+        return date_recrutement;
     }
 
-    public void setDateRecrutement(Date dateRecrutement) {
-        this.dateRecrutement = dateRecrutement;
+    public void setDate_recrutement(Date date_recrutement) {
+        this.date_recrutement = date_recrutement;
     }
 
     @Override
@@ -126,16 +121,16 @@ public class Employe {
 
         Employe employe = (Employe) o;
 
-        if (idEmploye != employe.idEmploye) return false;
+        if (id_employe != employe.id_employe) return false;
         if (nom != null ? !nom.equals(employe.nom) : employe.nom != null) return false;
         if (prenom != null ? !prenom.equals(employe.prenom) : employe.prenom != null) return false;
-        if (dateNaissance != null ? !dateNaissance.equals(employe.dateNaissance) : employe.dateNaissance != null)
+        if (date_naissance != null ? !date_naissance.equals(employe.date_naissance) : employe.date_naissance != null)
             return false;
         if (adresse != null ? !adresse.equals(employe.adresse) : employe.adresse != null) return false;
         if (telephone != null ? !telephone.equals(employe.telephone) : employe.telephone != null) return false;
         if (email != null ? !email.equals(employe.email) : employe.email != null) return false;
         if (statut != null ? !statut.equals(employe.statut) : employe.statut != null) return false;
-        if (dateRecrutement != null ? !dateRecrutement.equals(employe.dateRecrutement) : employe.dateRecrutement != null)
+        if (date_recrutement != null ? !date_recrutement.equals(employe.date_recrutement) : employe.date_recrutement != null)
             return false;
 
         return true;
@@ -143,15 +138,15 @@ public class Employe {
 
     @Override
     public int hashCode() {
-        int result = idEmploye;
+        int result = id_employe;
         result = 31 * result + (nom != null ? nom.hashCode() : 0);
         result = 31 * result + (prenom != null ? prenom.hashCode() : 0);
-        result = 31 * result + (dateNaissance != null ? dateNaissance.hashCode() : 0);
+        result = 31 * result + (date_naissance != null ? date_naissance.hashCode() : 0);
         result = 31 * result + (adresse != null ? adresse.hashCode() : 0);
         result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (statut != null ? statut.hashCode() : 0);
-        result = 31 * result + (dateRecrutement != null ? dateRecrutement.hashCode() : 0);
+        result = 31 * result + (date_recrutement != null ? date_recrutement.hashCode() : 0);
         return result;
     }
 }

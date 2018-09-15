@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {User} from './models/user.model';
+import {Student} from './models/student.model';
 
 
 
@@ -9,7 +9,7 @@ const httpOptions = {
 };
 
 @Injectable()
-export class UserService {
+export class StudentService {
 
   constructor(private http: HttpClient) {}
 
@@ -17,7 +17,7 @@ export class UserService {
   // private userUrl = '/api';
 
   public getUsers() {
-    return this.http.get<User[]>(this.userUrl);
+    return this.http.get<Student[]>(this.userUrl);
   }
 
   public deleteUser(user) {
@@ -25,11 +25,11 @@ export class UserService {
   }
 
   public createUser(user) {
-    return this.http.post<User>(this.userUrl, user);
+    return this.http.post<Student>(this.userUrl, user);
   }
 
   public updateUser(user) {
-    return this.http.put<User>(this.userUrl + '/' + user.id, user);
+    return this.http.put<Student>(this.userUrl + '/' + user.id, user);
   }
 
 }

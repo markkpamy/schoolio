@@ -1,33 +1,33 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {UserService} from './user.service';
+import {StudentService} from './student.service';
 import {TableModule} from 'primeng/table';
 import {DialogModule} from 'primeng/dialog';
 import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {User} from './models/user.model';
+import {Student} from './models/student.model';
 
 @Component({
   selector: 'app-user',
-  templateUrl: './user.component.html',
+  templateUrl: './student.component.html',
   styles: []
 })
-export class UserComponent implements OnInit {
+export class StudentComponent implements OnInit {
   displayDialog: boolean;
   userForm: FormGroup;
-  users: User[];
-  selectedUser: User;
+  users: Student[];
+  selectedUser: Student;
   cols: any;
   newUser: boolean;
-  user: User;
+  user: Student;
   hideFilter: boolean = false;
   public userFormId = 'userForm';
 
   constructor(
     private router: Router,
-    private userService: UserService,
+    private userService: StudentService,
     private messageService: MessageService,
     private formBuilder: FormBuilder
   ) {
@@ -47,12 +47,12 @@ export class UserComponent implements OnInit {
     this.getUsers();
     this.cols = [
       {field: 'id', header: 'ID'},
-      {field: 'firstName', header: 'Prénom'},
-      {field: 'lastName', header: 'Nom'},
+      {field: 'prenom', header: 'Prénom'},
+      {field: 'nom', header: 'Nom'},
       {field: 'email', header: 'Email'}];
   }
 
-  deleteUser(user: User): void {
+  deleteUser(user: Student): void {
     this.userService.deleteUser(user)
       .subscribe(() => {
         this.messageService.add({severity: 'success', summary: '', detail: 'Utilisateur supprimé'});
@@ -60,7 +60,7 @@ export class UserComponent implements OnInit {
       });
   }
 
-  createUser(user: User): void {
+  createUser(user: Student): void {
     this.userService.createUser(user)
       .subscribe(() => {
         this.messageService.add({severity: 'success', summary: '', detail: 'Utilisateur ajouté'});
@@ -71,7 +71,7 @@ export class UserComponent implements OnInit {
     ;
   }
 
-  updateUser(user: User): void {
+  updateUser(user: Student): void {
     this.userService.updateUser(user).subscribe(() => {
       this.messageService.add({severity: 'success', summary: '', detail: 'Utilisateur mis à jour'});
       this.getUsers();
@@ -81,9 +81,9 @@ export class UserComponent implements OnInit {
   }
 
   updateUserEditForm() {
-    this.userForm.get('id').setValue(this.selectedUser.id);
-    this.userForm.get('firstname').setValue(this.selectedUser.firstName);
-    this.userForm.get('lastname').setValue(this.selectedUser.lastName);
+    this.userForm.get('id').setValue(this.selectedUser.idEleve);
+    this.userForm.get('firstname').setValue(this.selectedUser.prenom);
+    this.userForm.get('lastname').setValue(this.selectedUser.nom);
     this.userForm.get('email').setValue(this.selectedUser.email);
   }
 
@@ -96,7 +96,7 @@ export class UserComponent implements OnInit {
 
   showDialogToAdd() {
     this.newUser = true;
-    this.user = new User();
+    this.user = new Student();
     this.displayDialog = true;
   }
 
@@ -133,9 +133,9 @@ export class UserComponent implements OnInit {
     this.userForm.reset();
   }
 
-  private assignFormValues(user: User): void {
-    user.firstName = this.userForm.get('firstname').value;
-    user.lastName = this.userForm.get('lastname').value;
+  private assignFormValues(user: Student): void {
+    user.prenom = this.userForm.get('firstname').value;
+    user.nom = this.userForm.get('lastname').value;
     user.email = this.userForm.get('email').value;
   }
 

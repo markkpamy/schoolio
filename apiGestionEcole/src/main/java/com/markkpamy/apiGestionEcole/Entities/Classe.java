@@ -7,32 +7,35 @@ import java.util.Set;
 @Entity
 public class Classe {
     @Id
-    @Column(name = "idClasse", nullable = false)
-    private int idClasse;
-
-    public int getIdClasse() {
-        return idClasse;
-    }
-
-    public void setIdClasse(int idClasse) {
-        this.idClasse = idClasse;
-    }
+    @Column(name = "id_classe", nullable = false)
+    private int id_classe;
 
     @Basic
-    @Column(name = "NomClasse", nullable = true, length = 45)
-    private String nomClasse;
-
-    public String getNomClasse() {
-        return nomClasse;
-    }
-
-    public void setNomClasse(String nomClasse) {
-        this.nomClasse = nomClasse;
-    }
+    @Column(name = "nom_classe", nullable = true, length = 45)
+    private String nom_classe;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Responsable", nullable = true)
+    @JoinColumn(name = "responsable", nullable = true)
     private Professeur responsable;
+
+    @OneToMany(mappedBy = "classe", fetch = FetchType.LAZY)
+    private Set<Student> students = new HashSet<>();
+
+    public String getNom_classe() {
+        return nom_classe;
+    }
+
+    public void setNom_classe(String nom_classe) {
+        this.nom_classe = nom_classe;
+    }
+
+    public int getId_classe() {
+        return id_classe;
+    }
+
+    public void setId_classe(int id_classe) {
+        this.id_classe = id_classe;
+    }
 
     public Professeur getResponsable() {
         return responsable;
@@ -45,12 +48,9 @@ public class Classe {
     @Override
     public String toString() {
         return "Classe{" +
-                "nomClasse='" + nomClasse + '\'' +
+                "nom_classe='" + nom_classe + '\'' +
                 '}';
     }
-
-    @OneToMany(mappedBy = "classe")
-    private Set<Student> students = new HashSet<>();
 
     public Set<Student> getStudents() {
         return students;

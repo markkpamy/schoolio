@@ -6,12 +6,13 @@ import javax.persistence.*;
 @Table(name = "matiere")
 public class Matiere {
 
-    public Matiere() {
-    }
+    @Id
+    @Column(name = "id_matiere", nullable = false)
+    private int id_matiere;
 
-    public Matiere(int idMatiere) {
-        this.idMatiere = idMatiere;
-    }
+    @Basic
+    @Column(name = "nom_matiere", nullable = true, length = 45)
+    private String nom_matiere;
 
     @Override
     public boolean equals(Object o) {
@@ -20,43 +21,39 @@ public class Matiere {
 
         Matiere matiere = (Matiere) o;
 
-        if (idMatiere != matiere.idMatiere) return false;
-        return nomMatiere.equals(matiere.nomMatiere);
+        if (id_matiere != matiere.id_matiere) return false;
+        return nom_matiere.equals(matiere.nom_matiere);
     }
 
     @Override
     public int hashCode() {
-        int result = idMatiere;
-        result = 31 * result + nomMatiere.hashCode();
+        int result = id_matiere;
+        result = 31 * result + nom_matiere.hashCode();
         return result;
     }
-
-    @Id
-    @Column(name = "idMatiere", nullable = false)
-    private int idMatiere;
 
     @Override
     public String toString() {
         return "Matiere{" +
-                "idMatiere=" + idMatiere +
-                ", nomMatiere='" + nomMatiere + '\'' +
+                "id_matiere=" + id_matiere +
+                ", nom_matiere='" + nom_matiere + '\'' +
                 '}';
     }
 
-    public int getIdMatiere() {
-        return idMatiere;
+    public int getId_matiere() {
+        return id_matiere;
     }
 
-    public void setIdMatiere(int idMatiere) {
-        this.idMatiere = idMatiere;
+    public void setId_matiere(int id_matiere) {
+        this.id_matiere = id_matiere;
     }
 
-    @Basic
-    @Column(name = "NomMatiere", nullable = true, length = 45)
-    private String nomMatiere;
+    public String getNom_matiere() {
+        return nom_matiere;
+    }
 
-    public String getNomMatiere() {
-        return nomMatiere;
+    public void setNom_matiere(String nom_matiere) {
+        this.nom_matiere = nom_matiere;
     }
 
     /*@ManyToMany(cascade = CascadeType.ALL, mappedBy = "matieres")
@@ -65,9 +62,5 @@ public class Matiere {
 /*
     @OneToMany(mappedBy = "matiere")
     private Set<Absence> absences = new HashSet<>();*/
-
-    public void setNomMatiere(String nomMatiere) {
-        this.nomMatiere = nomMatiere;
-    }
 
 }

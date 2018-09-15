@@ -8,34 +8,44 @@ import java.util.Date;
 public class Student {
 
     @Id
-    @Column
+    @Column(name = "id_eleve", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column
+    private int id_eleve;
+
+    @Basic
+    @Column(name = "nom", nullable = true, length = 45)
     private String nom;
-    @Column
+
+    @Basic
+    @Column(name = "prenom", nullable = true, length = 45)
     private String prenom;
-    @Column
+
+    @Column(name = "email", nullable = true, length = 45)
     private String email;
+
     @Temporal(TemporalType.DATE)
-    @Column
-    private Date dateNaissance;
-    @Column
-    private String lieuNaissance;
-    @Column
+    @Column(name = "date_naissance", nullable = true, length = 45)
+    private Date date_naissance;
+
+    @Column(name = "lieu_naissance", nullable = true, length = 45)
+    private String lieu_naissance;
+
+    @Column(name = "adresse", nullable = true, length = 45)
     private String adresse;
-    @Column
+
+    @Column(name = "telephone", nullable = true, length = 45)
     private String telephone;
-    @ManyToOne
-    @JoinColumn(name = "Classe", nullable = true)
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "classe", nullable = true)
     private Classe classe;
 
-    public int getId() {
-        return id;
+    public int getId_eleve() {
+        return id_eleve;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_eleve(int id_eleve) {
+        this.id_eleve = id_eleve;
     }
 
     public String getNom() {
@@ -62,20 +72,20 @@ public class Student {
         this.email = email;
     }
 
-    public Date getDateNaissance() {
-        return dateNaissance;
+    public Date getDate_naissance() {
+        return date_naissance;
     }
 
-    public void setDateNaissance(Date dateNaissance) {
-        this.dateNaissance = dateNaissance;
+    public void setDate_naissance(Date date_naissance) {
+        this.date_naissance = date_naissance;
     }
 
-    public String getLieuNaissance() {
-        return lieuNaissance;
+    public String getLieu_naissance() {
+        return lieu_naissance;
     }
 
-    public void setLieuNaissance(String lieuNaissance) {
-        this.lieuNaissance = lieuNaissance;
+    public void setLieu_naissance(String lieu_naissance) {
+        this.lieu_naissance = lieu_naissance;
     }
 
     public String getAdresse() {

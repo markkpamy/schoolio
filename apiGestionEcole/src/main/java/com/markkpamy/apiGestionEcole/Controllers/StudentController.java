@@ -28,7 +28,7 @@ public class StudentController {
 
     @PutMapping(path = {"/{id}"})
     public Student update(@PathVariable("id") int id, @RequestBody Student student){
-        student.setId(id);
+        student.setId_eleve(id);
         return userService.update(student);
     }
 

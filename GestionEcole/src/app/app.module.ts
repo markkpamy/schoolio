@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { UserComponent } from './user/user.component';
+import { StudentComponent } from './student/student.component';
 import { AppRoutingModule } from './app.routing.module';
-import {UserService} from './user/user.service';
+import {StudentService} from './student/student.service';
 import {HttpClientModule} from '@angular/common/http';
 import {TableModule} from 'primeng/table';
 import {DialogModule} from 'primeng/dialog';
@@ -16,7 +16,7 @@ import {ToastModule} from 'primeng/toast';
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent,
+    StudentComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +31,7 @@ import {ToastModule} from 'primeng/toast';
     ToastModule,
     ReactiveFormsModule
   ],
-  providers: [UserService, MessageService],
+  providers: [StudentService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
