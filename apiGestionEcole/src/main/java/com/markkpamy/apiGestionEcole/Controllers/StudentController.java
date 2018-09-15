@@ -1,6 +1,6 @@
 package com.markkpamy.apiGestionEcole.Controllers;
 
-import com.markkpamy.apiGestionEcole.Entities.User;
+import com.markkpamy.apiGestionEcole.Entities.Student;
 import com.markkpamy.apiGestionEcole.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,35 +10,35 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 //@RequestMapping({"/api"})
-@RequestMapping({"/users"})
-public class UserController {
+@RequestMapping({"/students"})
+public class StudentController {
 
     @Autowired
     private UserService userService;
 
     @PostMapping
-    public User create(@RequestBody User user){
-        return userService.create(user);
+    public Student create(@RequestBody Student student){
+        return userService.create(student);
     }
 
     @GetMapping(path = {"/{id}"})
-    public User findOne(@PathVariable("id") int id){
+    public Student findOne(@PathVariable("id") int id){
         return userService.findById(id);
     }
 
     @PutMapping(path = {"/{id}"})
-    public User update(@PathVariable("id") int id, @RequestBody User user){
-        user.setId(id);
-        return userService.update(user);
+    public Student update(@PathVariable("id") int id, @RequestBody Student student){
+        student.setId(id);
+        return userService.update(student);
     }
 
     @DeleteMapping(path ={"/{id}"})
-    public User delete(@PathVariable("id") int id) {
+    public Student delete(@PathVariable("id") int id) {
         return userService.delete(id);
     }
 
     @GetMapping
-    public List<User> findAll(){
+    public List<Student> findAll(){
         return userService.findAll();
     }
 }

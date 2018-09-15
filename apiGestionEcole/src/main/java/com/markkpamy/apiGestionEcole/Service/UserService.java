@@ -1,18 +1,18 @@
 package com.markkpamy.apiGestionEcole.Service;
 
-import com.markkpamy.apiGestionEcole.Entities.User;
+import com.markkpamy.apiGestionEcole.Entities.Student;
 
 import java.util.List;
 
 public interface UserService {
 
-    User create(User user);
+    Student create(Student student);
 
-    User delete(int id);
+    Student delete(int id);
 
-    List<User> findAll();
+    List<Student> findAll();
 
-    User findById(int id);
+    Student findById(int id);
 
-    User update(User user);
+    Student update(Student student);
 }

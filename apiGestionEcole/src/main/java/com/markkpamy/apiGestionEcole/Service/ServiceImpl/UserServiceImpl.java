@@ -1,6 +1,6 @@
 package com.markkpamy.apiGestionEcole.Service.ServiceImpl;
 
-import com.markkpamy.apiGestionEcole.Entities.User;
+import com.markkpamy.apiGestionEcole.Entities.Student;
 import com.markkpamy.apiGestionEcole.Repository.UserRepository;
 import com.markkpamy.apiGestionEcole.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,31 +15,31 @@ public class UserServiceImpl implements UserService {
     private UserRepository repository;
 
     @Override
-    public User create(User user) {
-        return repository.save(user);
+    public Student create(Student student) {
+        return repository.save(student);
     }
 
     @Override
-    public User delete(int id) {
-        User user = findById(id);
-        if(user != null){
-            repository.delete(user);
+    public Student delete(int id) {
+        Student student = findById(id);
+        if(student != null){
+            repository.delete(student);
         }
-        return user;
+        return student;
     }
 
     @Override
-    public List<User> findAll() {
+    public List<Student> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public User findById(int id) {
+    public Student findById(int id) {
         return repository.findById(id).get();
     }
 
     @Override
-    public User update(User user) {
-        return repository.save(user);
+    public Student update(Student student) {
+        return repository.save(student);
     }
 }
