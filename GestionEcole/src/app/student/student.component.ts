@@ -10,6 +10,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Student} from './models/student.model';
 import {PageRequest} from '../models/page-request.model';
 import {Filter} from '../models/filter.model';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-user',
@@ -105,7 +106,7 @@ export class StudentComponent implements OnInit {
         this.loading = false;
         this.students = pageResponse.results;
         this.totalRecords = pageResponse.totalElements;
-        this.messageService.add({severity: 'success', summary: '', detail: 'Liste récupérée avec succès'});
+        // this.messageService.add({severity: 'success', summary: '', detail: 'Liste récupérée avec succès'});
       }, () => {
         this.loading = false;
         this.messageService.add({severity: 'error', summary: '', detail: 'Liste non récupérée'});
@@ -162,22 +163,24 @@ export class StudentComponent implements OnInit {
 
   loadStudentLazy(event: LazyLoadEvent) {
     this.loading = true;
-    this.getFilters(event);
-    this.pageRequest = new  PageRequest((event.first / event.rows), event.rows, this.filters);
+    this.getFilters(event.filters);
+    this.pageRequest = new PageRequest((event.first / event.rows), event.rows, this.filters);
     this.getUsers();
   }
 
-  getFilters(event: LazyLoadEvent): void {
-    const nameFilter: any = event.filters['nom'];
-    const nameFilterValue: string[] = nameFilter ? nameFilter.value : null;
-    const firstnameFilter: any = event.filters['prenom'];
-    const firstnameFilterValue: string[] = firstnameFilter ? firstnameFilter.value : null;
+  getFilters(filters: any): void {
     this.filters = [];
-    if (nameFilterValue !== null) {
-    this.filters.push({key: 'nom', value: nameFilterValue});
+    for (const filter in filters) {
+      if (filters.hasOwnProperty(filter)) {
+        const tableFilter: any = filters[filter];
+        const tableFIlterValue: string[] = tableFilter ? tableFilter.value : null;
+        if (tableFIlterValue !== null) {
+          this.filters.push({key: filter, value: tableFIlterValue});
+        }
+      }
     }
-    //, {key: 'prenom', value: firstnameFilterValue}
-    //TODO add debounce time to filter
+    // {key: 'prenom', value: firstnameFilterValue}
+    // TODO add debounce time to filter
   }
 }
 

@@ -1,77 +1,79 @@
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
-<p-table #usertable [columns]="cols" [value]="students" selectionMode="single" [(selection)]="selectedUser"
-         [lazy]="true" (onLazyLoad)="loadStudentLazy($event)" [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" [paginator]="true"
-         [rows]="15" [loading]="loading">
-  <ng-template pTemplate="caption">
-    Liste des élèves
-    <i class="pi pi-filter" [ngStyle]="{float: 'right'}" type="button" (click)="onSearch()"></i>
-  </ng-template>
-  <ng-template pTemplate="header" let-columns>
-    <tr>
-      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-        {{col.header}}
-        <p-sortIcon [field]="col.field"></p-sortIcon>
-      </th>
-    </tr>
-    <tr *ngIf="hideFilter">
-      <th *ngFor="let col of columns" [ngSwitch]="col.field">
-        <input pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">
-        <!--<input *ngSwitchCase="'prenom'" pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">-->
-        <!--<input *ngSwitchCase="'nom'" pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">-->
-        <!--<input *ngSwitchCase="'email'" pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">-->
+<div class="p-grid">
+  <p-table #usertable [columns]="cols" [value]="students" selectionMode="single" [(selection)]="selectedUser"
+           [lazy]="true" (onLazyLoad)="loadStudentLazy($event)" [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" [paginator]="true"
+           [rows]="15" [loading]="loading">
+    <ng-template pTemplate="caption">
+      Liste des élèves
+      <i class="pi pi-filter" [ngStyle]="{float: 'right'}" type="button" (click)="onSearch()"></i>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+      </tr>
+      <tr *ngIf="hideFilter">
+        <th *ngFor="let col of columns" [ngSwitch]="col.field">
+          <input class="ui-g-12" pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">
+          <!--<input *ngSwitchCase="'prenom'" pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">-->
+          <!--<input *ngSwitchCase="'nom'" pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">-->
+          <!--<input *ngSwitchCase="'email'" pInputText type="text" (input)="usertable.filter($event.target.value, col.field, col.filterMatchMode)">-->
 
-      </th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <tr [pSelectableRow]="rowData">
-      <td *ngFor="let col of columns">
-        {{rowData[col.field]}}
-      </td>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="summary" let-rowData>
-    <div style="text-align:left">
-      <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
-    </div>
-  </ng-template>
-</p-table>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+        <td *ngFor="let col of columns">
+          {{rowData[col.field]}}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+      <div style="text-align:left">
+        <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+      </div>
+    </ng-template>
+  </p-table>
 
-<p-dialog header="User Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
-          [width]="300">
-  <div class="ui-g ui-fluid">
-    <form [formGroup]="studentForm" (submit)="onSubmit()" [attr.id]="studentFormId">
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="prenom">Prénom</label>
+  <p-dialog header="User Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+            [width]="300">
+    <div class="ui-g ui-fluid">
+      <form [formGroup]="studentForm" (submit)="onSubmit()" [attr.id]="studentFormId">
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="prenom">Prénom</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="prenom" formControlName="prenom"/>
+          </div>
         </div>
-        <div class="ui-g-8">
-          <input pInputText id="prenom" formControlName="prenom"/>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="nom">Nom</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="nom" formControlName="nom"/>
+          </div>
         </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="nom">Nom</label>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="email">Email</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="email" formControlName="email"/>
+          </div>
         </div>
-        <div class="ui-g-8">
-          <input pInputText id="nom" formControlName="nom"/>
-        </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="email">Email</label>
-        </div>
-        <div class="ui-g-8">
-          <input pInputText id="email" formControlName="email"/>
-        </div>
-      </div>
-    </form>
-  </div>
-  <p-footer>
-    <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" pButton icon="fa fa-close" class="ui-button-danger" (click)="delete()"
-              label="Delete"></button>
-      <button type="submit" pButton icon="fa fa-check" label="Save" [attr.form]="studentFormId"></button>
+      </form>
     </div>
-  </p-footer>
-</p-dialog>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" class="ui-button-danger" (click)="delete()"
+                label="Delete"></button>
+        <button type="submit" pButton icon="fa fa-check" label="Save" [attr.form]="studentFormId"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
+</div>
