@@ -1,10 +1,11 @@
 package com.markkpamy.apiGestionEcole.Entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "matiere")
-public class Matiere {
+public class Matiere implements Serializable {
 
     @Id
     @Column(name = "id_matiere", nullable = false)
@@ -23,13 +24,6 @@ public class Matiere {
 
         if (id_matiere != matiere.id_matiere) return false;
         return nom_matiere.equals(matiere.nom_matiere);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id_matiere;
-        result = 31 * result + nom_matiere.hashCode();
-        return result;
     }
 
     @Override

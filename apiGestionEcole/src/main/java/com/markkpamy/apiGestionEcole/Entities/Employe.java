@@ -1,11 +1,15 @@
 package com.markkpamy.apiGestionEcole.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "employe")
-public class Employe {
+public class Employe implements Serializable {
 
     @Id
     @Column(name = "id_employe", nullable = false)
@@ -24,12 +28,16 @@ public class Employe {
     private Date date_naissance;
 
     @Basic
+    @Column(name = "lieu_naissance", nullable = true, length = 45)
+    private String lieu_naissance;
+
+    @Basic
     @Column(name = "adresse", nullable = true, length = 45)
     private String adresse;
 
     @Basic
     @Column(name = "statut", nullable = true, length = 45)
-    private String statut;
+    private int statut;
 
     @Basic
     @Column(name = "telephone", nullable = true, length = 45)
@@ -98,11 +106,11 @@ public class Employe {
         this.email = email;
     }
 
-    public String getStatut() {
+    public int getStatut() {
         return statut;
     }
 
-    public void setStatut(String statut) {
+    public void setStatut(int statut) {
         this.statut = statut;
     }
 
@@ -114,39 +122,4 @@ public class Employe {
         this.date_recrutement = date_recrutement;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Employe employe = (Employe) o;
-
-        if (id_employe != employe.id_employe) return false;
-        if (nom != null ? !nom.equals(employe.nom) : employe.nom != null) return false;
-        if (prenom != null ? !prenom.equals(employe.prenom) : employe.prenom != null) return false;
-        if (date_naissance != null ? !date_naissance.equals(employe.date_naissance) : employe.date_naissance != null)
-            return false;
-        if (adresse != null ? !adresse.equals(employe.adresse) : employe.adresse != null) return false;
-        if (telephone != null ? !telephone.equals(employe.telephone) : employe.telephone != null) return false;
-        if (email != null ? !email.equals(employe.email) : employe.email != null) return false;
-        if (statut != null ? !statut.equals(employe.statut) : employe.statut != null) return false;
-        if (date_recrutement != null ? !date_recrutement.equals(employe.date_recrutement) : employe.date_recrutement != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id_employe;
-        result = 31 * result + (nom != null ? nom.hashCode() : 0);
-        result = 31 * result + (prenom != null ? prenom.hashCode() : 0);
-        result = 31 * result + (date_naissance != null ? date_naissance.hashCode() : 0);
-        result = 31 * result + (adresse != null ? adresse.hashCode() : 0);
-        result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (statut != null ? statut.hashCode() : 0);
-        result = 31 * result + (date_recrutement != null ? date_recrutement.hashCode() : 0);
-        return result;
-    }
 }

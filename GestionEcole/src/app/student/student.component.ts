@@ -5,9 +5,11 @@ import {StudentService} from './student.service';
 import {TableModule} from 'primeng/table';
 import {DialogModule} from 'primeng/dialog';
 import {ToastModule} from 'primeng/toast';
-import {MessageService} from 'primeng/api';
+import {FilterMetadata, LazyLoadEvent, MessageService} from 'primeng/api';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Student} from './models/student.model';
+import {PageRequest} from '../models/page-request.model';
+import {Filter} from '../models/filter.model';
 
 @Component({
   selector: 'app-user',
@@ -16,18 +18,22 @@ import {Student} from './models/student.model';
 })
 export class StudentComponent implements OnInit {
   displayDialog: boolean;
-  userForm: FormGroup;
-  users: Student[];
+  studentForm: FormGroup;
+  students: Student[];
   selectedUser: Student;
   cols: any;
-  newUser: boolean;
-  user: Student;
+  newStudent: boolean;
+  student: Student;
   hideFilter: boolean = false;
-  public userFormId = 'userForm';
+  public studentFormId = 'studentForm';
+  loading: boolean;
+  filters: Filter[];
+  pageRequest: PageRequest;
+  totalRecords: number; // number of all account transactions that correspond to the filter
 
   constructor(
     private router: Router,
-    private userService: StudentService,
+    private studentService: StudentService,
     private messageService: MessageService,
     private formBuilder: FormBuilder
   ) {
@@ -35,33 +41,42 @@ export class StudentComponent implements OnInit {
   }
 
   private createUserEditForm(): void {
-    this.userForm = this.formBuilder.group({
+    this.studentForm = this.formBuilder.group({
       id: [''],
-      firstname: [''],
-      lastname: [''],
+      prenom: [''],
+      nom: [''],
       email: ['']
     });
   }
 
   ngOnInit() {
+    this.pageRequest = new PageRequest(0, 15, this.filters);
     this.getUsers();
+   // this.loadStudentLazy(event);
     this.cols = [
-      {field: 'id', header: 'ID'},
+      {field: 'id_eleve', header: 'ID'},
       {field: 'prenom', header: 'Prénom'},
       {field: 'nom', header: 'Nom'},
+      {field: 'lieu_naissance', header: 'Lieu de naissance'},
+      {field: 'date_naissance', header: 'Date de naissance'},
+      {field: 'telephone', header: 'Telephone'},
+      {field: 'classe', header: 'Classe'},
       {field: 'email', header: 'Email'}];
+    this.loading = true;
   }
 
   deleteUser(user: Student): void {
-    this.userService.deleteUser(user)
+    this.studentService.deleteUser(user)
       .subscribe(() => {
         this.messageService.add({severity: 'success', summary: '', detail: 'Utilisateur supprimé'});
         this.getUsers();
+      }, () => {
+        this.messageService.add({severity: 'error', summary: '', detail: 'Erreur lors de la suppression'});
       });
   }
 
   createUser(user: Student): void {
-    this.userService.createUser(user)
+    this.studentService.createUser(user)
       .subscribe(() => {
         this.messageService.add({severity: 'success', summary: '', detail: 'Utilisateur ajouté'});
         this.getUsers();
@@ -72,7 +87,7 @@ export class StudentComponent implements OnInit {
   }
 
   updateUser(user: Student): void {
-    this.userService.updateUser(user).subscribe(() => {
+    this.studentService.updateUser(user).subscribe(() => {
       this.messageService.add({severity: 'success', summary: '', detail: 'Utilisateur mis à jour'});
       this.getUsers();
     }, () => {
@@ -81,32 +96,36 @@ export class StudentComponent implements OnInit {
   }
 
   updateUserEditForm() {
-    this.userForm.get('id').setValue(this.selectedUser.idEleve);
-    this.userForm.get('firstname').setValue(this.selectedUser.prenom);
-    this.userForm.get('lastname').setValue(this.selectedUser.nom);
-    this.userForm.get('email').setValue(this.selectedUser.email);
+    this.studentForm.get('id').setValue(this.selectedUser.id_eleve);
+    this.studentForm.get('prenom').setValue(this.selectedUser.prenom);
+    this.studentForm.get('nom').setValue(this.selectedUser.nom);
+    this.studentForm.get('email').setValue(this.selectedUser.email);
   }
 
   private getUsers(): void {
-    this.userService.getUsers()
-      .subscribe(data => {
-        this.users = data;
+    this.studentService.getUsers(this.pageRequest)
+      .subscribe(pageResponse => {
+        this.loading = false;
+        this.students = pageResponse.results;
+        this.totalRecords = pageResponse.totalElements;
+      }, () => {
+        this.loading = false;
+        this.messageService.add({severity: 'error', summary: '', detail: 'Liste non récupérée'});
       });
   }
 
   showDialogToAdd() {
-    this.newUser = true;
-    this.user = new Student();
+    this.newStudent = true;
+    this.student = new Student();
     this.displayDialog = true;
   }
 
   save() {
-    if (this.newUser) {
-      this.assignFormValues(this.user);
-      this.createUser(this.user);
-      this.user = null;
+    if (this.newStudent) {
+      this.assignFormValues(this.student);
+      this.createUser(this.student);
+      this.student = null;
     } else {
-      console.log('hello');
       this.assignFormValues(this.selectedUser);
       this.updateUser(this.selectedUser);
       this.selectedUser = null;
@@ -130,17 +149,30 @@ export class StudentComponent implements OnInit {
   }
 
   public resetUserForm(): void {
-    this.userForm.reset();
+    this.studentForm.reset();
   }
 
   private assignFormValues(user: Student): void {
-    user.prenom = this.userForm.get('firstname').value;
-    user.nom = this.userForm.get('lastname').value;
-    user.email = this.userForm.get('email').value;
+    user.prenom = this.studentForm.get('firstname').value;
+    user.nom = this.studentForm.get('lastname').value;
+    user.email = this.studentForm.get('email').value;
   }
 
   onSearch() {
     this.hideFilter = !this.hideFilter;
+  }
+
+  loadStudentLazy(event: LazyLoadEvent) {
+    this.loading = true;
+    this.getFilters(event);
+    this.pageRequest = new  PageRequest((event.first / event.rows), event.rows, this.filters);
+    this.getUsers();
+  }
+
+  getFilters(event: LazyLoadEvent): void {
+    const nameFilter: any = event.filters['nom'];
+    const nameFilterValue: string[] = nameFilter ? nameFilter.value : null;
+    this.filters.push({key: 'nom', value: nameFilterValue});
   }
 }
 

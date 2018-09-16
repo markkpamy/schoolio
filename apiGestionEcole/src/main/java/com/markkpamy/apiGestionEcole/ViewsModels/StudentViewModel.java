@@ -1,45 +1,23 @@
-package com.markkpamy.apiGestionEcole.Entities;
-
-import javax.persistence.*;
-import java.io.Serializable;
+package com.markkpamy.apiGestionEcole.ViewsModels;
 import java.util.Date;
 
-@Entity
-@Table(name = "eleve")
-public class Student implements Serializable {
+public class StudentViewModel {
 
-    @Id
-    @Column(name = "id_eleve", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_eleve;
 
-    @Basic
-    @Column(name = "nom", nullable = true, length = 45)
     private String nom;
 
-    @Basic
-    @Column(name = "prenom", nullable = true, length = 45)
     private String prenom;
 
-    @Column(name = "email", nullable = true, length = 45)
     private String email;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date_naissance", nullable = true, length = 45)
     private Date date_naissance;
 
-    @Column(name = "lieu_naissance", nullable = true, length = 45)
     private String lieu_naissance;
 
-    @Column(name = "adresse", nullable = true, length = 45)
     private String adresse;
 
-    @Column(name = "telephone", nullable = true, length = 45)
     private String telephone;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "classe", nullable = true)
-    private Classe classe;
 
     public int getId_eleve() {
         return id_eleve;
@@ -105,11 +83,4 @@ public class Student implements Serializable {
         this.telephone = telephone;
     }
 
-    public Classe getClasse() {
-        return classe;
-    }
-
-    public void setClasse(Classe classe) {
-        this.classe = classe;
-    }
 }

@@ -1,16 +1,16 @@
 package com.markkpamy.apiGestionEcole.Service;
 
 import com.markkpamy.apiGestionEcole.Entities.Student;
+import com.markkpamy.apiGestionEcole.Models.CustomPageRequest;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
-
-public interface UserService {
+public interface StudentService {
 
     Student create(Student student);
 
     Student delete(int id);
 
-    List<Student> findAll();
+    Page findStudents(CustomPageRequest pageRequest);
 
     Student findById(int id);
 

@@ -1,11 +1,15 @@
 package com.markkpamy.apiGestionEcole.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Classe {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Classe implements Serializable {
     @Id
     @Column(name = "id_classe", nullable = false)
     private int id_classe;
@@ -43,13 +47,6 @@ public class Classe {
 
     public void setResponsable(Professeur responsable) {
         this.responsable = responsable;
-    }
-
-    @Override
-    public String toString() {
-        return "Classe{" +
-                "nom_classe='" + nom_classe + '\'' +
-                '}';
     }
 
     public Set<Student> getStudents() {

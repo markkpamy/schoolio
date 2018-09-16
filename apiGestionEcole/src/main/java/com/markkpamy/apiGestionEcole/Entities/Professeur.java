@@ -1,28 +1,29 @@
 package com.markkpamy.apiGestionEcole.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "professeur")
-public class Professeur {
+public class Professeur implements Serializable {
 
     @Id
     @Column(name = "id_professeur", nullable = false)
     private int id_professeur;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_employe", nullable = false)
     private Employe employe;
 
     @Basic
     @Column(name = "grade", nullable = true, length = 45)
-    private String grade;
+    private int grade;
 
-    public String getGrade() {
-        return grade;
-    }
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(name = "corresp_matiere_professeur", joinColumns = @JoinColumn(name = "id_professeur"), inverseJoinColumns = {@JoinColumn(name = "id_matiere")})
     private Set<Matiere> matieres=new HashSet<>();
@@ -39,7 +40,11 @@ public class Professeur {
         this.id_professeur = id_professeur;
     }
 
-    public void setGrade(String grade) {
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
         this.grade = grade;
     }
 
@@ -55,14 +60,7 @@ public class Professeur {
         return matieres;
     }
 
-    public Professeur(Employe employe) {
-        this.employe = employe;
-    }
-
-    public void setMatieres(Set<Matiere> matieres) {
-
-        this.matieres = matieres;
-    }
+    public void setMatieres(Set<Matiere> matieres) { this.matieres = matieres; }
 
     public Set<Classe> getClasses() {
         return classes;
@@ -72,14 +70,4 @@ public class Professeur {
         this.classes = classes;
     }
 
-    @Override
-    public String toString() {
-        return "Professeur{" +
-                "id_professeur=" + id_professeur +
-                ", employe=" + employe +
-                ", grade='" + grade + '\'' +
-                ", matieres=" + matieres.toString() +
-                ", classes=" + classes.toString() +
-                '}';
-    }
 }
