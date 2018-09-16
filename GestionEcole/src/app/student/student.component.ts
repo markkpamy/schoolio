@@ -27,7 +27,7 @@ export class StudentComponent implements OnInit {
   hideFilter: boolean = false;
   public studentFormId = 'studentForm';
   loading: boolean;
-  filters: Filter[];
+  filters: Filter[] = [];
   pageRequest: PageRequest;
   totalRecords: number; // number of all account transactions that correspond to the filter
 
@@ -50,9 +50,7 @@ export class StudentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pageRequest = new PageRequest(0, 15, this.filters);
-    this.getUsers();
-   // this.loadStudentLazy(event);
+    this.loading = true;
     this.cols = [
       {field: 'id_eleve', header: 'ID'},
       {field: 'prenom', header: 'Prénom'},
@@ -62,7 +60,6 @@ export class StudentComponent implements OnInit {
       {field: 'telephone', header: 'Telephone'},
       {field: 'classe', header: 'Classe'},
       {field: 'email', header: 'Email'}];
-    this.loading = true;
   }
 
   deleteUser(user: Student): void {
@@ -108,6 +105,7 @@ export class StudentComponent implements OnInit {
         this.loading = false;
         this.students = pageResponse.results;
         this.totalRecords = pageResponse.totalElements;
+        this.messageService.add({severity: 'success', summary: '', detail: 'Liste récupérée avec succès'});
       }, () => {
         this.loading = false;
         this.messageService.add({severity: 'error', summary: '', detail: 'Liste non récupérée'});
@@ -153,8 +151,8 @@ export class StudentComponent implements OnInit {
   }
 
   private assignFormValues(user: Student): void {
-    user.prenom = this.studentForm.get('firstname').value;
-    user.nom = this.studentForm.get('lastname').value;
+    user.prenom = this.studentForm.get('prenom').value;
+    user.nom = this.studentForm.get('nom').value;
     user.email = this.studentForm.get('email').value;
   }
 
@@ -172,7 +170,14 @@ export class StudentComponent implements OnInit {
   getFilters(event: LazyLoadEvent): void {
     const nameFilter: any = event.filters['nom'];
     const nameFilterValue: string[] = nameFilter ? nameFilter.value : null;
+    const firstnameFilter: any = event.filters['prenom'];
+    const firstnameFilterValue: string[] = firstnameFilter ? firstnameFilter.value : null;
+    this.filters = [];
+    if (nameFilterValue !== null) {
     this.filters.push({key: 'nom', value: nameFilterValue});
+    }
+    //, {key: 'prenom', value: firstnameFilterValue}
+    //TODO add debounce time to filter
   }
 }
 

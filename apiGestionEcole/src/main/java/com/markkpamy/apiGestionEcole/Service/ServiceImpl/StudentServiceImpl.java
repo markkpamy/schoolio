@@ -86,27 +86,27 @@ public class StudentServiceImpl implements StudentService {
                         break;
                     case "prenom":
                         for (String filterValue : pageRequestFilter.getValue()) {
-                            filters.add(student.prenom.likeIgnoreCase(filterValue));
+                            filters.add(student.prenom.containsIgnoreCase(filterValue));
                         }
                         break;
                     case "nom":
                         for (String filterValue : pageRequestFilter.getValue()) {
-                            filters.add(student.nom.likeIgnoreCase(filterValue));
+                            filters.add(student.nom.containsIgnoreCase(filterValue));
                         }
                         break;
                     case "lieu_naissance":
                         for (String filterValue : pageRequestFilter.getValue()) {
-                            filters.add(student.lieu_naissance.likeIgnoreCase(filterValue));
+                            filters.add(student.lieu_naissance.containsIgnoreCase(filterValue));
                         }
                         break;
                     case "telephone":
                         for (String filterValue : pageRequestFilter.getValue()) {
-                            filters.add(student.telephone.likeIgnoreCase(filterValue));
+                            filters.add(student.telephone.containsIgnoreCase(filterValue));
                         }
                         break;
                     case "email":
                         for (String filterValue : pageRequestFilter.getValue()) {
-                            filters.add(student.email.likeIgnoreCase(filterValue));
+                            filters.add(student.email.containsIgnoreCase(filterValue));
                         }
                         break;
                 }
