@@ -84,5 +84,5 @@ public class StudentViewModel {
     }
 
     //TODO penser à comment afficher la classe
-    //TODO ajouter pagination
+    //TODO ajouter tri
 }
