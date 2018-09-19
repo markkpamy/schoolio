@@ -10,6 +10,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,11 +42,15 @@ public class StudentServiceImpl implements StudentService {
         if (!filters.isEmpty()) {
             return studentRepository.findAll(
                     chainFiltersWithAnd(filters),
-                    PageRequest.of(customPageRequest.getPage(), customPageRequest.getSize())
+                    PageRequest.of(customPageRequest.getPage(), customPageRequest.getSize(), Sort.by(customPageRequest.getSortDirection(), customPageRequest.getSortField()))
             );
         } else {
             return studentRepository.findAll(
-                    PageRequest.of(customPageRequest.getPage(), customPageRequest.getSize())
+                    PageRequest.of(
+                            customPageRequest.getPage(),
+                            customPageRequest.getSize(),
+                            Sort.by(customPageRequest.getSortDirection(),
+                                    customPageRequest.getSortField() == null ? "prenom" : customPageRequest.getSortField()))
             );
         }
     }

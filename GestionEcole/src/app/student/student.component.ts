@@ -1,16 +1,14 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {StudentService} from './student.service';
-import {TableModule} from 'primeng/table';
-import {DialogModule} from 'primeng/dialog';
-import {ToastModule} from 'primeng/toast';
-import {FilterMetadata, LazyLoadEvent, MessageService} from 'primeng/api';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {LazyLoadEvent, MessageService} from 'primeng/api';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Student} from './models/student.model';
 import {PageRequest} from '../models/page-request.model';
 import {Filter} from '../models/filter.model';
-import {forEach} from '@angular/router/src/utils/collection';
+import {Sort} from '../models/sort.model';
+import {Direction} from '../enums/direction.enum';
 
 @Component({
   selector: 'app-user',
@@ -29,6 +27,7 @@ export class StudentComponent implements OnInit {
   public studentFormId = 'studentForm';
   loading: boolean;
   filters: Filter[] = [];
+  sort: Sort;
   pageRequest: PageRequest;
   totalRecords: number; // number of all account transactions that correspond to the filter
 
@@ -164,8 +163,17 @@ export class StudentComponent implements OnInit {
   loadStudentLazy(event: LazyLoadEvent) {
     this.loading = true;
     this.getFilters(event.filters);
-    this.pageRequest = new PageRequest((event.first / event.rows), event.rows, this.filters);
+    this.pageRequest =
+      new PageRequest((event.first / event.rows),
+        event.rows,
+        this.filters,
+        this.getSortDirection(event.sortOrder),
+        event.sortField);
     this.getUsers();
+  }
+
+  getSortDirection(sort: number): Direction {
+    return (sort === 1 ) ? Direction.Up : Direction.Down;
   }
 
   getFilters(filters: any): void {
@@ -179,7 +187,6 @@ export class StudentComponent implements OnInit {
         }
       }
     }
-    // {key: 'prenom', value: firstnameFilterValue}
     // TODO add debounce time to filter
   }
 }
