@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {StudentService} from './student.service';
+import {StudentService} from '../student.service';
 import {LazyLoadEvent, MessageService} from 'primeng/api';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {Student} from './models/student.model';
+import {Student} from '../models/student.model';
 import {PageRequest} from '../../models/page-request.model';
 import {Filter} from '../../models/filter.model';
 import {Sort} from '../../models/sort.model';
@@ -12,10 +12,10 @@ import {Direction} from '../../enums/direction.enum';
 
 @Component({
   selector: 'app-user',
-  templateUrl: './student.component.html',
+  templateUrl: './student-list.component.html',
   styles: []
 })
-export class StudentComponent implements OnInit {
+export class StudentListComponent implements OnInit {
   displayDialog: boolean;
   studentForm: FormGroup;
   students: Student[];

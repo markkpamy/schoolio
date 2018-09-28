@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Student} from './models/student.model';
-import {PageRequest} from '../../models/page-request.model';
-import {PageResponse} from '../../models/page-response.model';
+import {PageRequest} from '../models/page-request.model';
+import {PageResponse} from '../models/page-response.model';
 
 
 
